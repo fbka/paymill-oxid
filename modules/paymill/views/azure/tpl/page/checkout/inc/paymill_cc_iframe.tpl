@@ -3,7 +3,15 @@
     <dt>
         <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
         <label for="payment_[{$sPaymentID}]">
-            <b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b>
+            <b>[{ $paymentmethod->oxpayments__oxdesc->value}]
+            [{if $paymentmethod->getPrice()}]
+                        [{if $oxcmp_basket->getPayCostNet()}]
+                            ([{$paymentmethod->getFNettoPrice()}] [{$currency->sign}] [{oxmultilang ident="PAGE_CHECKOUT_BASKETCONTENTS_PLUSTAX1"}] [{$paymentmethod->getFPriceVat()}] )
+                        [{else}]
+                            ([{$paymentmethod->getFBruttoPrice()}] [{$currency->sign}])
+                        [{/if}]
+             [{/if}]
+            </b>
         </label>
     </dt>
     <dd class="[{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]activePayment[{/if}]">
@@ -38,7 +46,7 @@
                         <tr>
                         <td></td>
                         <td>
-                        <button id="paymillFastCheckoutIframeChange" type="button">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_IFRAME_CHANGE }]</button>
+                        <button id="paymillFastCheckoutIframeChange" type="button">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_IFRAME_CHANGE" }]</button>
                         </td>
                         </tr>
                     </table>
